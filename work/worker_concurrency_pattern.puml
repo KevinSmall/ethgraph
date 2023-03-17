@@ -1,0 +1,42 @@
+@startuml
+
+actor User
+
+User -> getTokenMasterDataForMissingTokensConcurrent: Call function
+
+activate getTokenMasterDataForMissingTokensConcurrent
+
+getTokenMasterDataForMissingTokensConcurrent -> work.New: Create new work pool
+work.New  -> getTokenWorker: Spawn worker goroutines
+activate work.New
+activate getTokenWorker
+
+getTokenMasterDataForMissingTokensConcurrent -> getTokenWorker: Submit tasks
+getTokenWorker -> work.Pool: Add worker to work queue
+activate work.Pool
+deactivate getTokenWorker
+
+work.Pool -> getTokenWorker: Pick up task from queue and execute
+getTokenWorker  -> tokens.GetTokenFromChain : Call GetTokenFromChain function
+activate tokens.GetTokenFromChain
+tokens.GetTokenFromChain  -> getTokenWorker : Return result to worker
+deactivate tokens.GetTokenFromChain
+
+getTokenWorker  -> resultsChan : Send result to results channel
+deactivate getTokenWorker
+
+work.Pool  --> getTokenMasterDataForMissingTokensConcurrent: Return control to function
+
+getTokenMasterDataForMissingTokensConcurrent -> resultsChan : Collect results from channel
+activate resultsChan
+resultsChan  --> getTokenMasterDataForMissingTokensConcurrent: Send results
+deactivate resultsChan
+
+getTokenMasterDataForMissingTokensConcurrent -> work.Pool : Shutdown work pool
+work.Pool  -> work.Pool : Wait for all goroutines to shutdown
+getTokenMasterDataForMissingTokensConcurrent --> User #Orange: Return results
+
+deactivate work.Pool
+deactivate getTokenMasterDataForMissingTokensConcurrent
+
+@enduml
