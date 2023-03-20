@@ -16,7 +16,11 @@ The above sample is part of a larger dataset. Using the _exact same dataset_ in 
 
 In the above screenshot, the dense "starburst" area at the bottom left is the zero address. The zero address is involved in many movements, very often minting happens from the zero address. Towards the centre of the image, other dense areas form that are the crypto exchange addresses. To the right of the image is the "dust" of addresses that have transacted little (in the block ranges used for data selection) and so are not very connected.
 
-This is all kind-of pretty, but it's hard to make any sense of very dense graphs. In graph analysis very dense graphs are known as "hairballs". Graphing tools also allow statistical analysis, and Gephi offers many standard measures of connectedness and identification of clusters. Gephi also allows animated views showing how graphs grow over time. More samples can be found in the project [Wiki](https://github.com/KevinSmall/ethgraph/wiki).
+This is all kind-of pretty, but it's hard to make any sense of very dense graphs. In graph analysis very dense graphs are known as "hairballs". Graphing tools also allow statistical analysis, and Gephi offers many standard measures of connectedness and identification of clusters. Gephi also allows animated views showing how graphs grow over time:
+
+![Zero Address Animation](./docs/anim_zero_address.gif "Zero Address Animated Timeline (from Gephi)")
+
+More samples can be found in the project [Wiki](https://github.com/KevinSmall/ethgraph/wiki).
 
 Since `ethgraph` is compatible with any EVM-based chain that uses similar ERC token standards, we can easily collect data from other chains. Avalanche has a similar appearance, although many fewer transactions. Here an exchange and the zero address are dominating:
 
@@ -61,7 +65,7 @@ ethgraph version 1.0.0
 ```
 
 ## How to use
-Sample usage, here selecting block numbers from Ethereum mainnet:
+Sample usage, here selecting block numbers from `-f` and to `-t` from Ethereum mainnet:
 ```
 $ ./ethgraph byblock "https://<RPC endpoint>"  -f 16_835_977 -t 16_835_978
 ```
