@@ -20,9 +20,7 @@ This is kind-of pretty, but it's hard to make any sense of very dense graphs. In
 
 This dataset was formed from about 200 blocks of Ethereum mainnet, about 40 minutes worth of movements. Since `ethgraph` is compatible with any EVM-based chain that uses similar ERC token standards, we can easily collect data from other chains. Avalanche has a similar appearance, with an exchange and the zero address dominating:
 
-![Avalance graph](./docs/movements_avalancehe.png "Avalanche Token Movements as Graph (Gephi screenshot")
-
-
+![Avalanche graph](./docs/movements_avalanche.png "Avalanche Token Movements as Graph (Gephi screenshot")
 
 ## How to install
 
