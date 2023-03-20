@@ -8,9 +8,21 @@ When a GraphML file of token movements is opened in a graphing tool like [Gephi]
 
 ![Movements as graph](./docs/movements_as_graph.png "Token Movements as Graph (Gephi screenshot)")
 
-When zoomed out, patterns are repeated.
+In the above screenshot, taken from Gephi, the large green circles are addresses (full address hashes are available in Gephi and can be copied to the clipboard, but in visuals they clutter up the display). The smaller circles are movements of a particular token or NFT, color coded by token type. USDC is light green, USDT is orange. 
+
+The above sample is part of a larger dataset of some 60k nodes and 100k edges. Using the exact same dataset in Gephi, we can zoom out, switch off labels and adjust the coloring. When zooming out, some common patterns start to appear:
 
 ![Far graph](./docs/movements_as_graph_far.png "Token Movements as Graph from Afar (Gephi screenshot")
+
+In the above screenshot, the dense "starburst" area at the bottom left is the zero address. The zero address is involved in many minting and burning movements. Towards the centre of the image, other dense areas form that are the crypto exchange addresses. To the right of the image is the "dust" of addresses that have transacted little and so are not very connected.
+
+This is kind-of pretty, but it's hard to make any sense of very dense graphs. In graph analysis very dense graphs are known as "hairballs". Graphing tools also allow statistical analysis, and Gephi offers many standard measures of connectedness and identification of clusters. Gephi also allows animated views showing how graphs grow over time. More samples can be found in the project [Wiki](https://github.com/KevinSmall/ethgraph/wiki).
+
+This dataset was formed from about 200 blocks of Ethereum mainnet, about 40 minutes worth of movements. Since `ethgraph` is compatible with any EVM-based chain that uses similar ERC token standards, we can easily collect data from other chains. Avalanche has a similar appearance, with an exchange and the zero address dominating:
+
+![Avalance graph](./docs/movements_avalancehe.png "Avalanche Token Movements as Graph (Gephi screenshot")
+
+
 
 ## How to install
 
