@@ -20,7 +20,7 @@ var flagIsVerboseOutputRequested *bool
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Version: "1.0.0",
+	Version: "1.0.1",
 	Use:     "ethgraph <command> <url> [flags]",
 	Short:   "Ethgraph builds GraphML files of ERC20, ERC721 and ERC1155 token movements from EVM-compatible chains",
 	Long: `Ethgraph is a CLI tool that queries Ethereum or other EVM-compatible chains to
