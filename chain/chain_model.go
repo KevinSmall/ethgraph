@@ -70,8 +70,8 @@ type TransferEvent struct {
 	LogEmitterAddress common.Address
 }
 
-func (event *TransferEvent) Print() {
-
+func (event *TransferEvent) Print(title string) {
+	logr.Info.Println("------------", title, " -----------")
 	logr.Info.Println("BlockNumber:", event.BlockNumber)
 	logr.Info.Println("BlockTimestamp:", event.BlockTimestamp.Format("2006-01-02 15:04:05"))
 	logr.Info.Println("TxHash:", event.TxHash.Hex())

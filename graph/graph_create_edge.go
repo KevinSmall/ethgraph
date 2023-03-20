@@ -51,12 +51,22 @@ func addEdgesToGraph(
 		// Create edge from "transfer log from-address" to "transfer event middle node"
 		_, err = g.AddEdge(nodeFrom, nodeForEvent, attributes, graphml.EdgeDirectionDirected, label)
 		if err != nil {
-			logr.Error.Panicln(err)
+			if event.TransferType == chain.ERC1155_BATCH {
+				// Occasional bad data in ERC1155 batches, just ignore
+				continue
+			} else {
+				logr.Error.Panicln(err)
+			}
 		}
 		// Create edge "transfer event middle node" to "transfer log to-address"
 		_, err = g.AddEdge(nodeForEvent, nodeTo, attributes, graphml.EdgeDirectionDirected, label)
 		if err != nil {
-			logr.Error.Panicln(err)
+			if event.TransferType == chain.ERC1155_BATCH {
+				// Occasional bad data in ERC1155 batches, just ignore
+				continue
+			} else {
+				logr.Error.Panicln(err)
+			}
 		}
 	}
 }

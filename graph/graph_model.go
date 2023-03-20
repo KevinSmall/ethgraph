@@ -24,6 +24,16 @@ type mvtNodeKey struct {
 	nftId    string
 }
 
+func (mvt *mvtNodeKey) Print(title string) {
+	logr.Info.Println("------------", title, " -----------")
+	logr.Info.Println("edgeFrom:", mvt.edgeFrom)
+	logr.Info.Println("edgeTo:", mvt.edgeTo)
+	logr.Info.Println("txHash:", mvt.txHash)
+	logr.Info.Println("logIndex:", mvt.logIndex)
+	logr.Info.Println("nftId:", mvt.nftId)
+	logr.Info.Println("---------------------------------------------------")
+}
+
 func formatTimestamp(time time.Time) string {
 	return time.Format("2006-01-02 15:04:05.999")
 }
