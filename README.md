@@ -1,5 +1,5 @@
 # EthGraph
-EthGraph is a tool to generate GraphML for token movements for ERC20, ERC721 and ERC1155 (or their equivalents) on any EVM-compatible blockchain. [GraphML](https://en.wikipedia.org/wiki/GraphML) is an XML file format for graph data which is commonly used by graphing tools. We can then use those graphing tools to analyse token movements.
+EthGraph is a tool written in Go to generate GraphML for token movements for ERC20, ERC721 and ERC1155 (or their equivalents) on any EVM-compatible blockchain. [GraphML](https://en.wikipedia.org/wiki/GraphML) is an XML file format for graph data which is commonly used by graphing tools. We can then use those graphing tools to analyse token movements.
 
 ## How can this be used?
 The token movements form a `graph` made up of `nodes` (addresses and movements) and `edges` (links between addresses and movement). A `movement` is a transfer of a single token type or single NFT between one address and another. ERC1155 transactions, which can move many NFTs in a single transaction, are decomposed into their individual movements.
@@ -10,7 +10,7 @@ When a GraphML file of token movements is opened in a graphing tool like [Gephi]
 
 In the above screenshot, taken from Gephi, the large green circles are addresses (full address hashes are available in Gephi and can be copied to the clipboard, but in visuals they clutter up the display). The smaller circles are movements of a particular token or NFT, color coded by token type. USDC is light green, USDT is orange. 
 
-The above sample is part of a larger dataset of some 60k nodes and 100k edges. Using the exact same dataset in Gephi, we can zoom out, switch off labels and adjust the coloring. When zooming out, some common patterns start to appear:
+The above sample is part of a larger dataset. Using the _exact same dataset_ in Gephi, we can zoom out, switch off labels and adjust the coloring. When zooming out, some common patterns start to appear:
 
 ![Far graph](./docs/movements_as_graph_far.png "Token Movements as Graph from Afar (Gephi screenshot")
 
@@ -18,9 +18,14 @@ In the above screenshot, the dense "starburst" area at the bottom left is the ze
 
 This is kind-of pretty, but it's hard to make any sense of very dense graphs. In graph analysis very dense graphs are known as "hairballs". Graphing tools also allow statistical analysis, and Gephi offers many standard measures of connectedness and identification of clusters. Gephi also allows animated views showing how graphs grow over time. More samples can be found in the project [Wiki](https://github.com/KevinSmall/ethgraph/wiki).
 
-This dataset was formed from about 200 blocks of Ethereum mainnet, about 40 minutes worth of movements. Since `ethgraph` is compatible with any EVM-based chain that uses similar ERC token standards, we can easily collect data from other chains. Avalanche has a similar appearance, with an exchange and the zero address dominating:
+Since `ethgraph` is compatible with any EVM-based chain that uses similar ERC token standards, we can easily collect data from other chains. Avalanche has a similar appearance, although many fewer transactions. Here an exchange and the zero address are dominating:
 
 ![Avalanche graph](./docs/movements_avalanche.png "Avalanche Token Movements as Graph (Gephi screenshot")
+
+## Performance and Limitations
+The above Ethereum dataset was formed from about 200 blocks (~40 minutes) worth of transactions from Ethereum mainnet. This produces some 60k nodes and 90k edges. As a rule of thumb, graphs of 50k to 100k nodes become cumbersome to use Gephi or similar tools. 
+
+`ethgraph` is designed to perform well. Processing 200 blocks of mainnet, including master data retrieval for thousands of tokens, takes ~7 seconds on a reasonable laptop. This produces a file that starts to reach the limits of Gephi. Smaller extracts are much easier to manage. When experimenting, start with just a few blocks and work up.
 
 ## How to install
 
@@ -55,11 +60,11 @@ $ ./ethgraph byblock "https://<RPC endpoint>"  -f 16_835_977 -t 16_835_978
 ```
 If you were using Infura it might be:
 ```
-$ ./ethgraph byblock  "https://mainnet.infura.io/v3/<your API key>>"  -f 16_835_977 -t 16_835_986
+$ ./ethgraph byblock  "https://mainnet.infura.io/v3/<your API key>"  -f 16_835_977 -t 16_835_986
 ```
 Or for Avalanche on Infura:
 ```
 $ ./ethgraph byblock "https://avalanche-mainnet.infura.io/v3/<your API key>" -f 27_486_035 -t 27_486_094
 ```
 
-The file created is called `<chainname>.graphml`. This can then be opened in Gephi or other graph tools, see [Wiki](https://github.com/KevinSmall/ethgraph/wiki) for more detailed usage.
+The file created is called `<chainname>.graphml`. It will overwrite any existing file with the same name. This file can then be opened in Gephi or other graph tools, see [Wiki](https://github.com/KevinSmall/ethgraph/wiki) for more detailed usage.
