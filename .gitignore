@@ -20,3 +20,12 @@
 build/
 dist/
 vendor/
+
+# Build files
+.tokens_1_cache.csv
+.tokens_56_cache.csv
+.tokens_43314_cache.csv
+ethereum.graphml
+binance.graphml
+avalanche.graphml
+ethgraph
